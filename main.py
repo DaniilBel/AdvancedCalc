@@ -1,20 +1,24 @@
 from flask import Flask, request, render_template
 import re
-from database.model.connector import create_connection
 
 app = Flask(__name__)
 app.debug = True
+
+history = []
 
 
 class ParseError(ValueError):
     pass
 
 
+def inform_user(msg: str):
+    app.logger.info("Calculation problem: %s", msg)
+    print(msg)  # add code to inform user
+
+
 @app.route('/')
 def index():
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM calc_history")
-    return render_template('index.html', history=cursor.fetchall())
+    return render_template('index.html')
 
 
 @app.route('/calculate', methods=['POST'])
@@ -22,24 +26,29 @@ def calculate():
     expression = request.form['display']
     # потом нормально обработать исключения с выводом сообщения в окне
     if re.fullmatch(r"\A[()0-9+*/^%-]*\Z", expression) is None:
-        raise ParseError("There is unsupported symbols in request!")
+        inform_user("There is unsupported symbols in request!")
+        return render_template(
+            'index.html',
+            result="",
+            history=history
+        )
     if len(re.findall(r"(?:[+*/^%-]--)|(?:\+\+\+)|(?://)|(?:\*\*)", expression)) != 0:
-        raise ParseError("There is unsupported combination of symbols in request!")
+        inform_user("There is unsupported combination of symbols in request!")
+        return render_template(
+            'index.html',
+            result="",
+            history=history
+        )
     try:
-        # если будет поддержка ^ - заменить здесь на ** : result = eval(expression.replace("^", "**"))
+        # если будет поддержка ^ - заменить здесь на **
         result = eval(expression)
-        cursor = connection.cursor()
-        sql = "INSERT INTO calc_history (line, answer) VALUES (%s, %s)"
-        val = (expression, result)
-        cursor.execute(sql, val)
-
     except ZeroDivisionError:
-        raise ZeroDivisionError("Division by zero found!")
+        inform_user("Division by zero found!")
+        return render_template('index.html', result="", history=history)
+    history.append({"expression": str(expression), "result": str(result)})
 
-    cursor.execute("SELECT * FROM calc_history")
-    return render_template('index.html', result=result, history=cursor.fetchall())
+    return render_template('index.html', result=result, history=history)
 
 
 if __name__ == '__main__':
-    connection = create_connection()
     app.run()
