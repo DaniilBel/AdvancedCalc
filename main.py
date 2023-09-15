@@ -26,6 +26,7 @@ def index():
 @app.route('/calculate', methods=['POST'])
 def calculate():
     expression = request.form['display']
+    cursor = connection.cursor()
     # потом нормально обработать исключения с выводом сообщения в окне
     if re.fullmatch(r"\A[()0-9+*/^%.-]*\Z", expression) is None:
         inform_user("There is unsupported symbols in request!")
@@ -44,6 +45,9 @@ def calculate():
     try:
         # если будет поддержка ^ - заменить здесь на **
         result = eval(expression)
+        sql = "INSERT INTO calc_history (line, answer) VALUES (%s, %s)"
+        val = (expression, result)
+        cursor.execute(sql, val)
     except ZeroDivisionError:
         inform_user("Division by zero found!")
         return render_template('index.html', result="", history=cursor.fetchall())
