@@ -14,7 +14,6 @@ class ParseError(ValueError):
 
 
 def inform_user(msg: str):
-    app.logger.info("Calculation problem: %s", msg)
     print(msg)  # add code to inform user
 
 
@@ -44,8 +43,6 @@ def calculate():
     try:
         # если будет поддержка ^ - заменить здесь на **
         result = eval(expression)
-        if abs(result - round(result)) <= sys.float_info.min:
-            result = int(round(result))
     except ZeroDivisionError:
         inform_user("Division by zero found!")
         return render_template('index.html', result="", history=history)
