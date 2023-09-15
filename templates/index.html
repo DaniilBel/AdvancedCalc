@@ -13,7 +13,7 @@
     <div class="calculator">
         <form action="{{ url_for('calculate') }}" method="post">
             <div class="display">
-                <input type="text" name="display" value="{{result}}" required>
+                <input type="text" name="display" value="{{ result }}" required>
             </div>
             <div>
 <!--                All clear-->
@@ -53,7 +53,7 @@
         <div class="history">
             <ul>
                 {% for item in history %}
-                <div class="history-item" data-result="{{ item.result }}">
+                <div class="history-item" data-result="{{ item[1] }}">
                     <li>{{ item[0] }} = {{ item[1] }}</li>
                 </div>
                 {% endfor %}
