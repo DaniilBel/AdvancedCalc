@@ -54,7 +54,7 @@
             <ul>
                 {% for item in history %}
                 <div class="history-item" data-result="{{ item.result }}">
-                    <li>{{ item.expression }} = {{ item.result }}</li>
+                    <li>{{ item[0] }} = {{ item[1] }}</li>
                 </div>
                 {% endfor %}
             </ul>
