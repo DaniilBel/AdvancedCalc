@@ -1,3 +1,5 @@
+import sys
+
 from flask import Flask, request, render_template
 import re
 
@@ -25,7 +27,7 @@ def index():
 def calculate():
     expression = request.form['display']
     # потом нормально обработать исключения с выводом сообщения в окне
-    if re.fullmatch(r"\A[()0-9+*/^%-]*\Z", expression) is None:
+    if re.fullmatch(r"\A[()0-9+*/^%.-]*\Z", expression) is None:
         inform_user("There is unsupported symbols in request!")
         return render_template(
             'index.html',
@@ -42,6 +44,8 @@ def calculate():
     try:
         # если будет поддержка ^ - заменить здесь на **
         result = eval(expression)
+        if abs(result - round(result)) <= sys.float_info.min:
+            result = int(round(result))
     except ZeroDivisionError:
         inform_user("Division by zero found!")
         return render_template('index.html', result="", history=history)
