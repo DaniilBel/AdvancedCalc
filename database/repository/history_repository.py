@@ -64,7 +64,8 @@ class HistoryRepository:
         """
 
         try:
-            line, answer = cursor.execute(query).fetchall()[0]
+            cursor.execute(query)
+            line, answer = cursor.fetchall()[0]
             cursor.close()
             return History_get(line, answer)
 
@@ -78,14 +79,16 @@ class HistoryRepository:
         """
 
         cursor = self.connection.cursor()
-        query = """SELECT * FROM calc_history"""
+        query = "SELECT * FROM calc_history"
 
         try:
             history = []
+            cursor.execute(query)
 
-            for row in cursor.execute(query).fetchall():
+            for row in cursor.fetchall():
                 line, answer = row
-                history.append(History_get(line, answer))
+                #history.append(History_get(line, answer))
+                history.append([line, answer])
 
             cursor.close()
             return history
