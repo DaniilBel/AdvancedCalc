@@ -2,8 +2,8 @@ import json
 from flask import Response, request
 
 from controller import bp
-from model.calc_history import History
-from repository.history_repository import HistoryRepository
+from database.model.calc_history import History
+from database.repository.history_repository import HistoryRepository
 
 
 repository = HistoryRepository()
