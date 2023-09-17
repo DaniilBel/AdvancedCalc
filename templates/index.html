@@ -13,44 +13,46 @@
     <div class="calculator">
         <form action="{{ url_for('calculate') }}" method="post">
             <div class="display">
-                <input type="text" name="display" value="{{result}}" required>
+                <input type="text" name="display" value="{{result}}" placeholder="0" required>
             </div>
             <div>
-<!--                All clear-->
-                <input type="button" value="AC" onclick="display.value = '' " class="operator">
-<!--                Delete-->
-                <input type="button" value="DE" onclick="display.value = display.value.toString().slice(0, -1) " class="operator">
-                <input type="button" value="." onclick="display.value += '.' " class="operator">
+                <input type="button" value="C" onclick="display.value = '' " class="operator">
+                <input type="button" value="Del" onclick="display.value = display.value.toString().slice(0, -1) " class="operator">
+                <input type="button" value="^" onclick="display.value += '^' " class="operator">
                 <input type="button" value="/" onclick="display.value += '/' " class="operator">
+                <input type="button" value="(" onclick="display.value += '(' " class="operator">
             </div>
             <div>
                 <input type="button" value="7" onclick="display.value += '7' ">
                 <input type="button" value="8" onclick="display.value += '8' ">
                 <input type="button" value="9" onclick="display.value += '9' ">
                 <input type="button" value="*" onclick="display.value += '*' " class="operator">
+                <input type="button" value=")" onclick="display.value += ')' " class="operator">
             </div>
             <div>
                 <input type="button" value="4" onclick="display.value += '4' ">
                 <input type="button" value="5" onclick="display.value += '5' ">
                 <input type="button" value="6" onclick="display.value += '6' ">
-                <input type="button" value="-" onclick="display.value += '-' " class="operator">
+                <input type="button" value="+" onclick="display.value += '+' " class="operator">
+                <input type="button" value=">" onclick="display.value += '6' " id="open-history" class="equal operator">
             </div>
             <div>
                 <input type="button" value="1" onclick="display.value += '1' ">
                 <input type="button" value="2" onclick="display.value += '2' ">
                 <input type="button" value="3" onclick="display.value += '3' ">
-                <input type="button" value="+" onclick="display.value += '+' " class="operator">
+                <input type="button" value="-" onclick="display.value += '-' " class="operator">
             </div>
             <div>
-                <input type="button" value="00" onclick="display.value += '00' ">
+                <input type="button" value="%" onclick="display.value += '%' ">
                 <input type="button" value="0" onclick="display.value += '0' ">
 <!--                <input type="button" value="=" onclick="display.value = eval(display.value)" class="equal operator">-->
+                <input type="button" value="." onclick="display.value += '.' ">
                 <input type="submit" value="=" class="equal operator">
             </div>
         </form>
     </div>
-    <form action="{{ url_for('calculate') }}" method="post">
-        <div class="history">
+    <div id="history">
+        <div class="content">
             <ul>
                 {% for item in history %}
                 <div class="history-item" data-result="{{ item.result }}">
@@ -58,10 +60,16 @@
                 </div>
                 {% endfor %}
             </ul>
+            <form action="{{ url_for('historyMoment') }}" method="post">
+                <div>
+                    <input type="submit" value="D" class="equal operator">
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
 <script src="{{ url_for('static', filename='restore.js') }}"></script>
+<script src="{{ url_for('static', filename='historyBtn.js') }}"></script>
 </body>
 </html>

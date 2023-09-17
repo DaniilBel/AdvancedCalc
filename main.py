@@ -22,6 +22,11 @@ def calculate():
     return render_template('index.html', result=result, history=history)
 
 
+@app.route('/history', methods=['POST'])
+def historyMoment():
+    pass
+
+
 if __name__ == '__main__':
     app.run()
 

@@ -14,42 +14,43 @@
     justify-content: center;
 }
 
-.container .history {
-    background: #3a4452;
-    padding: 20px;
+.container #history {
+    background: #FFFFFF;
+    /* padding: 20px; */
     height: 500px;
     align-items: center;
 }
 
-.container .history div {
+.container #history .history-item {
     background: #3a445f;
     padding: 20px;
     border-radius: 10px;
     margin: 5px;
 }
 
-.container .history li {
+.container #history li {
     list-style-type: none;
     font-size: 20px;
     color: #fff;
 }
 
 .calculator {
-    background: #3a4452;
-    padding: 20px;
+    background: #FFFFFF;
+    padding: 10px;
     border-radius: 10px;
+    /* font-weight: bold; */
 }
 
-.calculator form input {
+.container form input {
     border: 0;
     outline: 0;
     width: 60px;
     height: 60px;
     border-radius: 10px;
     box-shadow: -8px -8px 15px rgba(255, 255, 255, 0.1), 5px 5px 15px rgba(0, 0, 0, 0.2);
-    background: transparent;
-    font-size: 20px;
-    color: #fff;
+    background: #EFEFEF;
+    font-size: 30px;
+    color: #181818;
     cursor: pointer;
     margin: 10px;
 }
@@ -65,12 +66,37 @@ form .display input {
     flex: 1;
     font-size: 45px;
     box-shadow: none;
+    padding-right: 20px;
 }
 
-form input.equal {
-    width: 145px;
+form input.equal.operator {
+    /* width: 145px; */
+    background-color: #FEC13B;
 }
 
 form input.operator {
-    color: #33ffd8;
+    color: #C88C2C;
+    background-color: #FEEFBF;
+}
+
+#history {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.5s;
+    max-height: 100%;
+}
+
+#history .content {
+    overflow-y: auto;
+    max-height: 100%;
+    padding: 10px;
+}
+
+#history.opened {
+    width: 300px;
+}
+
+#history form {
+    display:flex;
+    justify-content:flex-end;
 }
