@@ -75,9 +75,9 @@ def calculate():
 
 @app.route('/history', methods=['POST'])
 def history_moment():
-    history.clear()
+    # history.clear()
 
-    return render_template('index.html', history=history)
+    return render_template('index.html', history=[])
 
 
 
