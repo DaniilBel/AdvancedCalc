@@ -36,9 +36,10 @@ def calculate():
         result = eval(expression.replace("^", "**"))
         history.add_history(History(expression, result, str(datetime.datetime.now())))
     except ZeroDivisionError:
+        result = ""
         flash("Division by zero found!")
 
-    return redirect(url_for("index"), 301)
+    return render_template('index.html', history=history.get_history(), result=result)
 
 
 @app.route('/clear', methods=['POST'])
