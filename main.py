@@ -19,6 +19,16 @@ def is_number(string):
         return False
 
 
+def expression_check(expression) -> (bool, str):
+    if re.fullmatch(r"\A[()0-9+*/^%.-]*\Z", expression) is None:
+        return False, "There is unsupported symbols in request!"
+    if len(re.findall(r"(?:[+*/^%-]--)|(?:\+\+\+)|(?://)|(?:\*\*)", expression)) != 0:
+        return False, "There is unsupported combination of symbols in request!"
+    if not is_number(expression):
+        return False, "There are non-arithmetic chars in this expression!"
+    return True,
+
+
 @app.route('/')
 def index():
     return render_template('index.html', history=history.get_history())
@@ -26,14 +36,13 @@ def index():
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
-    expression = request.form['display']
+    expression = request.form['display'].replace("^", "**")
 
-    if re.fullmatch(r"\A[()0-9+*/^%.-]*\Z", expression) is None:
-        flash("There is unsupported symbols in request!")
-    if len(re.findall(r"(?:[+*/^%-]--)|(?:\+\+\+)|(?://)|(?:\*\*)", expression)) != 0:
-        flash("There is unsupported combination of symbols in request!")
+    is_valid = expression_check(expression)
+    if not is_valid[0]:
+        flash(is_valid[1])
     try:
-        result = eval(expression.replace("^", "**"))
+        result = eval(expression)
         history.add_history(History(expression, result, str(datetime.datetime.now())))
     except ZeroDivisionError:
         result = ""
