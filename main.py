@@ -10,10 +10,6 @@ app = Flask(__name__)
 app.debug = True
 
 
-class ParseError(ValueError):
-    pass
-
-
 def is_number(string):
     try:
         float(string)
