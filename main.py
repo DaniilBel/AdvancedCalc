@@ -1,12 +1,13 @@
 import datetime
 import re
 
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, flash
 
 from database.model.calc_history import History
 from database.repository.history_repository import HistoryRepository
 
 app = Flask(__name__)
+app.secret_key = "KADadbjhaOW&^*FTYG*WGXjskBSJLHBasnk"
 app.debug = True
 
 
@@ -27,30 +28,17 @@ def index():
 def calculate():
     expression = request.form['display']
 
-    # потом нормально обработать исключения с выводом сообщения в окне
     if re.fullmatch(r"\A[()0-9+*/^%.-]*\Z", expression) is None:
-        print("There is unsupported symbols in request!")
-        return render_template(
-            'index.html',
-            result="",
-            history=history.get_history()
-        )
+        flash("There is unsupported symbols in request!")
     if len(re.findall(r"(?:[+*/^%-]--)|(?:\+\+\+)|(?://)|(?:\*\*)", expression)) != 0:
-        print("There is unsupported combination of symbols in request!")
-        return render_template(
-            'index.html',
-            result="",
-            history=history.get_history()
-        )
+        flash("There is unsupported combination of symbols in request!")
     try:
         result = eval(expression.replace("^", "**"))
-        entity = History(expression, result, str(datetime.datetime.now()))
-        history.add_history(entity)
+        history.add_history(History(expression, result, str(datetime.datetime.now())))
     except ZeroDivisionError:
-        print("Division by zero found!")
-        return render_template('index.html', result="", history=history.get_history())
+        flash("Division by zero found!")
 
-    return render_template('index.html', result=result, history=history.get_history())
+    return redirect(url_for("index"), 301)
 
 
 @app.route('/clear', methods=['POST'])

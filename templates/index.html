@@ -9,6 +9,11 @@
 </head>
 <body>
 
+<div>
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+</div>
 <div class="container">
     <div class="calculator">
         <form action="{{ url_for('calculate') }}" method="post">
