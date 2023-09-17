@@ -4,10 +4,9 @@ from mysql.connector import Error
 
 def create_connection():
     """
-    Crate connection to database.
+    Create connection to database.
     """
 
-    connection = None
     try:
         connection = mysql.connector.connect(
             host='127.0.0.1',
@@ -18,8 +17,8 @@ def create_connection():
         )
         connection.autocommit = True
         print("Connection to MySQl DB successful")
+
+        return connection
     except Error as err:
-        print(f"The error '{err}' occerred")
+        print(f"The error '{err}' occurred")
         raise err
-    
-    return connection
