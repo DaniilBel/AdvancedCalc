@@ -17,6 +17,14 @@ def inform_user(msg: str):
     print(msg)  # add code to inform user
 
 
+def is_number(str):
+    try:
+        float(str)
+        return True
+    except ValueError:
+        return False
+
+
 @app.route('/')
 def index():
     return render_template('index.html', history=history.get_history())
@@ -25,6 +33,7 @@ def index():
 @app.route('/calculate', methods=['POST'])
 def calculate():
     expression = request.form['display']
+
     # потом нормально обработать исключения с выводом сообщения в окне
     if re.fullmatch(r"\A[()0-9+*/^%.-]*\Z", expression) is None:
         inform_user("There is unsupported symbols in request!")
@@ -41,7 +50,7 @@ def calculate():
             history=history.get_history()
         )
     try:
-        # если будет поддержка ^ - заменить здесь на **
+        # если будет поддержка ^ - заменить здесь на ** TODO
         result = eval(expression)
         print(expression, result)
         entity = History()
@@ -54,6 +63,22 @@ def calculate():
         return render_template('index.html', result="", history=history.get_history())
 
     return render_template('index.html', result=result, history=history.get_history())
+
+
+    """if not is_number(expression):
+        result = eval(expression)
+        history.append({"expression": str(expression), "result": str(result)})
+        return render_template('index.html', result=result, history=history)
+
+    return render_template('index.html', history=history)"""
+
+
+@app.route('/history', methods=['POST'])
+def history_moment():
+    history.clear()
+
+    return render_template('index.html', history=history)
+
 
 
 if __name__ == '__main__':

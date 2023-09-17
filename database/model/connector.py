@@ -17,6 +17,7 @@ def create_connection():
         )
         connection.autocommit = True
         print("Connection to MySQl DB successful")
+
         return connection
     except Error as err:
         print(f"The error '{err}' occurred")

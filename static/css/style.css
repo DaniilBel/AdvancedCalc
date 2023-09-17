@@ -14,42 +14,50 @@
     justify-content: center;
 }
 
-.container .history {
-    background: #3a4452;
-    padding: 20px;
+.container #history {
+    background: #FFFFFF;
+    /* padding: 20px; */
     height: 500px;
     align-items: center;
 }
 
-.container .history div {
-    background: #3a445f;
+.container #history .history-item {
+    background: #EFEFEF;
     padding: 20px;
     border-radius: 10px;
     margin: 5px;
 }
 
-.container .history li {
+.container #history li {
     list-style-type: none;
     font-size: 20px;
-    color: #fff;
+    color: #181818;
+}
+
+.container img {
+    width: 85%;
+    display: flex;
+    margin-left: 13px;
+    opacity: 0.5;
 }
 
 .calculator {
-    background: #3a4452;
-    padding: 20px;
+    background: #FFFFFF;
+    padding: 10px;
     border-radius: 10px;
+    /* font-weight: bold; */
 }
 
-.calculator form input {
+.container form input, button {
     border: 0;
     outline: 0;
     width: 60px;
     height: 60px;
     border-radius: 10px;
     box-shadow: -8px -8px 15px rgba(255, 255, 255, 0.1), 5px 5px 15px rgba(0, 0, 0, 0.2);
-    background: transparent;
-    font-size: 20px;
-    color: #fff;
+    background: #EFEFEF;
+    font-size: 30px;
+    color: #181818;
     cursor: pointer;
     margin: 10px;
 }
@@ -60,17 +68,51 @@ form .display {
     margin: 20px 0;
 }
 
-form .display input {
+form .display input, button {
     text-align: right;
     flex: 1;
     font-size: 45px;
     box-shadow: none;
+    padding-right: 20px;
 }
 
-form input.equal {
-    width: 145px;
+form input.equal.operator, button.equal.operator {
+    /* width: 145px; */
+    background-color: #FEC13B;
 }
 
-form input.operator {
-    color: #33ffd8;
+form input.operator, button.operator {
+    color: #C88C2C;
+    background-color: #FEEFBF;
+}
+
+#open-history {
+    transition: transform 0.3s ease;
+}
+
+#open-history img {
+    transition: transform 0.3s ease;
+}
+
+#history {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.3s;
+    max-height: 100%;
+    /* border-radius: 5px; */
+}
+
+#history .content {
+    overflow-y: auto;
+    max-height: 100%;
+    padding: 10px;
+}
+
+#history.opened {
+    width: 300px;
+}
+
+#history form {
+    display:flex;
+    justify-content:flex-end;
 }
