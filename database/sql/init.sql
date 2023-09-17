@@ -5,5 +5,5 @@ CREATE TABLE calc_history
 (
 	line VARCHAR(512) PRIMARY KEY, 
 	answer FLOAT,
-	date datetime
+	date TEXT
 );

@@ -27,7 +27,8 @@ class HistoryRepository:
 
         try:
             cursor.execute(query, [history.line, 
-                                   history.answer])
+                                   history.answer,
+                                   history.date])
             cursor.close()
             return "History line add successfully."
         except Error as err:
@@ -65,9 +66,9 @@ class HistoryRepository:
 
         try:
             cursor.execute(query)
-            line, answer = cursor.fetchall()[0]
+            line, answer, date = cursor.fetchall()[0]
             cursor.close()
-            return History_get(line, answer)
+            return History_get(line, answer, date)
 
         except Error as err:
             return None
@@ -86,9 +87,9 @@ class HistoryRepository:
             cursor.execute(query)
 
             for row in cursor.fetchall():
-                line, answer = row
+                line, answer, date = row
                 #history.append(History_get(line, answer))
-                history.append([line, answer])
+                history.append([line, answer, date])
 
             cursor.close()
             return history
