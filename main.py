@@ -1,7 +1,7 @@
 import datetime
 import re
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 
 from database.model.calc_history import History
 from database.repository.history_repository import HistoryRepository
@@ -43,8 +43,7 @@ def calculate():
             history=history.get_history()
         )
     try:
-        # если будет поддержка ^ - заменить здесь на ** TODO
-        result = eval(expression)
+        result = eval(expression.replace("^", "**"))
         entity = History(expression, result, str(datetime.datetime.now()))
         history.add_history(entity)
     except ZeroDivisionError:
@@ -53,6 +52,12 @@ def calculate():
         return render_template('index.html', result="", history=history.get_history())
 
     return render_template('index.html', result=result, history=history.get_history())
+
+
+@app.route('/clear', methods=['POST'])
+def history_clear():
+    history.clear_history()
+    return redirect(url_for("index"), 301)
 
 
 if __name__ == '__main__':

@@ -63,7 +63,7 @@
                 </div>
                 {% endfor %}
             </ul>
-            <form action="{{ url_for('history_moment') }}" method="post">
+            <form action="{{ url_for('history_clear') }}" method="post">
                 <div>
                     <button type="submit" value="CH" class="equal operator">
                         <img src="{{ url_for('static', filename='images/trash.png') }}" alt="trash" />
