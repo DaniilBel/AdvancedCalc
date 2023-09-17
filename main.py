@@ -11,16 +11,8 @@ app.secret_key = "KADadbjhaOW&^*FTYG*WGXjskBSJLHBasnk"
 app.debug = True
 
 
-def is_number(string):
-    try:
-        float(string)
-        return True
-    except ValueError:
-        return False
-
-
 def expression_check(expression) -> (bool, str):
-    if re.fullmatch(r"\A[()0-9+*/^%.-]*\Z", expression) is None or not is_number(expression):
+    if re.fullmatch(r"\A[()0-9+*/^%.-]*\Z", expression) is None:
         return False, "There is unsupported symbols in request!"
     if len(re.findall(r"(?:[+*/^%-]--)|(?:\+\+\+)|(?://)|(?:\*\*)", expression)) != 0:
         return False, "There is unsupported combination of symbols in request!"
