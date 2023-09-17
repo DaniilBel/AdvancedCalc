@@ -34,7 +34,7 @@
                 <input type="button" value="5" onclick="display.value += '5' ">
                 <input type="button" value="6" onclick="display.value += '6' ">
                 <input type="button" value="+" onclick="display.value += '+' " class="operator">
-                <input type="button" value=">" onclick="display.value += '6' " id="open-history" class="equal operator">
+                <input type="button" value=">" id="open-history" class="equal operator">
             </div>
             <div>
                 <input type="button" value="1" onclick="display.value += '1' ">
@@ -47,6 +47,7 @@
                 <input type="button" value="0" onclick="display.value += '0' ">
 <!--                <input type="button" value="=" onclick="display.value = eval(display.value)" class="equal operator">-->
                 <input type="button" value="." onclick="display.value += '.' ">
+
                 <input type="submit" value="=" class="equal operator">
             </div>
         </form>
@@ -60,7 +61,7 @@
                 </div>
                 {% endfor %}
             </ul>
-            <form action="{{ url_for('historyMoment') }}" method="post">
+            <form action="{{ url_for('history_moment') }}" method="post">
                 <div>
                     <input type="submit" value="CH" class="equal operator">
                 </div>
