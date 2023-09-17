@@ -8,11 +8,9 @@ history = []
 
 def is_number(str):
     try:
-        print('t')
         float(str)
         return True
     except ValueError:
-        print('f')
         return False
 
 
@@ -26,11 +24,10 @@ def calculate():
     expression = request.form['display']
 
     if not is_number(expression):
-        print(expression)
         result = eval(expression)
         history.append({"expression": str(expression), "result": str(result)})
         return render_template('index.html', result=result, history=history)
-    print(2)
+
     return render_template('index.html', history=history)
 
 
