@@ -48,7 +48,6 @@ def calculate():
         history.add_history(entity)
     except ZeroDivisionError:
         print("Division by zero found!")
-        history.clear_history()
         return render_template('index.html', result="", history=history.get_history())
 
     return render_template('index.html', result=result, history=history.get_history())
