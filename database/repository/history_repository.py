@@ -1,7 +1,8 @@
-from mysql.connector import Error
 from typing import Optional
 
-from database.model.calc_history import History, History_get
+from mysql.connector import Error
+
+from database.model.calc_history import History, HistoryGet
 from database.model.connector import create_connection
 
 
@@ -13,27 +14,25 @@ class HistoryRepository:
     def __init__(self):
         self.connection = create_connection()
 
-
     def add_history(self, history: History) -> Optional[str]:
         """
         This method creates and adds new history in table.
         """
-        
+
         cursor = self.connection.cursor()
         query = """
-        INSERT INTO calc_history (line, answer) 
-        VALUES (%s, %s)
+        INSERT INTO calc_history (line, answer, date) 
+        VALUES (%s, %s, %s)
         """
 
         try:
-            cursor.execute(query, [history.line, 
+            cursor.execute(query, [history.line,
                                    history.answer,
                                    history.date])
             cursor.close()
             return "History line add successfully."
         except Error as err:
             return None
-
 
     def clear_history(self) -> Optional[str]:
         """
@@ -51,8 +50,7 @@ class HistoryRepository:
         except Error as err:
             return None
 
-
-    def get_answer(self, line: str) -> Optional[History_get]:
+    def get_answer(self, line: str) -> Optional[HistoryGet]:
         """
         This method returns the historical calculation response.
         """
@@ -68,11 +66,10 @@ class HistoryRepository:
             cursor.execute(query)
             line, answer, date = cursor.fetchall()[0]
             cursor.close()
-            return History_get(line, answer, date)
+            return HistoryGet(line, answer, date)
 
         except Error as err:
             return None
-
 
     def get_history(self) -> Optional[list]:
         """
@@ -80,7 +77,7 @@ class HistoryRepository:
         """
 
         cursor = self.connection.cursor()
-        query = "SELECT * FROM calc_history"
+        query = "SELECT * FROM calc_history ORDER BY date DESC"
 
         try:
             history = []
@@ -88,7 +85,6 @@ class HistoryRepository:
 
             for row in cursor.fetchall():
                 line, answer, date = row
-                #history.append(History_get(line, answer))
                 history.append([line, answer, date])
 
             cursor.close()

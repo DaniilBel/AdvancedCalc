@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 
-@dataclass(init=False)
+@dataclass(init=True)
 class History:
     line: str
     answer: float
@@ -9,7 +9,7 @@ class History:
 
 
 @dataclass
-class History_get:
+class HistoryGet:
     line: str
     answer: float
     date: str
