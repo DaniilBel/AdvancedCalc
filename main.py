@@ -24,7 +24,9 @@ def calculate():
 
 @app.route('/history', methods=['POST'])
 def historyMoment():
-    pass
+    history.clear()
+
+    return render_template('index.html', history=history)
 
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@
                 <input type="text" name="display" value="{{result}}" placeholder="0" required>
             </div>
             <div>
-                <input type="button" value="C" onclick="display.value = '' " class="operator">
+                <input type="button" value="AC" onclick="display.value = '' " class="operator">
                 <input type="button" value="Del" onclick="display.value = display.value.toString().slice(0, -1) " class="operator">
                 <input type="button" value="^" onclick="display.value += '^' " class="operator">
                 <input type="button" value="/" onclick="display.value += '/' " class="operator">
@@ -62,7 +62,7 @@
             </ul>
             <form action="{{ url_for('historyMoment') }}" method="post">
                 <div>
-                    <input type="submit" value="D" class="equal operator">
+                    <input type="submit" value="CH" class="equal operator">
                 </div>
             </form>
         </div>
