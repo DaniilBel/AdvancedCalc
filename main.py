@@ -15,7 +15,7 @@ def expression_check(expression) -> (bool, str):
     if re.fullmatch(r"\A[\t ()0-9+*/^%.-]*\Z", expression) is None:
         return False, "There are unsupported symbols in request!"
     if len(re.findall(r"(?:[+*/^%-]--)|(?:\+\+\+)|(?://)|(?:\*\*)", expression)) != 0:
-        return False, "There are unsupported combination of symbols in request!"
+        return False, "There are unsupported combinations of symbols in request!"
     return True,
 
 
