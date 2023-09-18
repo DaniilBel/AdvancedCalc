@@ -114,6 +114,25 @@ form input.operator, button.operator {
     padding: 10px;
 }
 
+#history .history-item, .display input::-webkit-scrollbar {
+    overflow-x: auto;
+}
+
+#history .history-item::-webkit-scrollbar, .display input::-webkit-scrollbar {
+    width: 5px;
+    height: 7px;
+    margin-bottom: 10px;
+}
+
+#history .history-item::-webkit-scrollbar-thumb, .display input::-webkit-scrollbar {
+    background-color: #868686;
+    border-radius: 8px;
+}
+
+#history .history-item::-webkit-scrollbar-track, .display input::-webkit-scrollbar {
+    background-color: #EFEFEF;
+}
+
 #history.opened {
     width: 300px;
 }
