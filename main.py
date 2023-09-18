@@ -8,7 +8,6 @@ from database.repository.history_repository import HistoryRepository
 
 app = Flask(__name__)
 app.secret_key = "KADadbjhaOW&^*FTYG*WGXjskBSJLHBasnk"
-app.debug = True
 
 
 def expression_check(expression) -> (bool, str):
