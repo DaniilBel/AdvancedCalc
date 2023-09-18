@@ -13,8 +13,8 @@ def test_invalid_symbols():
     assert expression_check("(5.5 / 2) * #1") == (False, "There are unsupported symbols in request!")
 
 def test_invalid_combinations():
-    assert expression_check("3 + 2 *-- (4 - 1)") == (False, "There are unsupported combination of symbols in request!")
-    assert expression_check("(5.5 / 2) +++ -1") == (False, "There are unsupported combination of symbols in request!")
+    assert expression_check("3 + 2 *-- (4 - 1)") == (False, "There are unsupported combinations of symbols in request!")
+    assert expression_check("(5.5 / 2) +++ -1") == (False, "There are unsupported combinations of symbols in request!")
 
 def test_empty_expression():
     assert expression_check("") == (True,)  # Пустое выражение считается допустимым
@@ -29,7 +29,7 @@ def test_valid_expression_with_special_characters():
     assert expression_check("3.14159 * 2^(-2) % 7") == (True, )
 
 def test_valid_expression_with_double_minus():
-    assert expression_check("5 * --3") == (False, "There are unsupported combination of symbols in request!")
+    assert expression_check("5 * --3") == (False, "There are unsupported combinations of symbols in request!")
 
 def test_valid_expression_with_double_plus():
-    assert expression_check("4 +++ 2") == (False, "There are unsupported combination of symbols in request!")
+    assert expression_check("4 +++ 2") == (False, "There are unsupported combinations of symbols in request!")
