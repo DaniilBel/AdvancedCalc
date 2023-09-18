@@ -92,3 +92,27 @@ class HistoryRepository:
 
         except Error as err:
             return None
+
+    def init(self) -> Optional[str]:
+
+        cursor = self.connection.cursor()
+        query = """
+            CREATE DATABASE advanced_calc;
+
+            USE advanced_calc;
+
+            CREATE TABLE calc_history 
+            (
+                line VARCHAR(512), 
+                answer FLOAT,
+                date VARCHAR(50) PRIMARY KEY
+            );
+        """
+
+        try:
+            cursor.execute(query)
+            cursor.close()
+            return "Init succesfull."
+
+        except Error as err:
+            return None

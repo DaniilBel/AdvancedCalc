@@ -9,11 +9,10 @@ def create_connection():
 
     try:
         connection = mysql.connector.connect(
-            host='127.0.0.1',
+            host='db',
             port=3306,
-            user='root',
-            # passwd='processionLF0112358.',
-            passwd='1234',
+            user='user_name',
+            passwd='password',
             database='advanced_calc',
         )
         connection.autocommit = True

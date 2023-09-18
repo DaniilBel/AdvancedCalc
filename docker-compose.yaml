@@ -1,0 +1,24 @@
+version: '1.1'
+
+services:
+
+  db:
+    container_name: Database
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: user_name
+      MYSQL_DATABASE: advanced_calc
+      HOST: 'db'
+    volumes:
+      - ./database/sql:/docker-entrypoint-initdb.d
+
+  app:
+      container_name: calculate
+      depends_on:
+          - db
+      restart: on-failure:1000
+      build: .
+      ports:
+          - "5000:5000"
