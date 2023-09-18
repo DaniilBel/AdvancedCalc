@@ -12,7 +12,7 @@ services:
       MYSQL_DATABASE: advanced_calc
       HOST: 'db'
     volumes:
-      - ./sql:/docker-entrypoint-initdb.d
+      - ./database/sql:/docker-entrypoint-initdb.d
 
   app:
       container_name: calculate

@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS advanced_calc;
+CREATE DATABASE advanced_calc;
+
 USE advanced_calc;
 
 CREATE TABLE calc_history 
