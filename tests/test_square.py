@@ -29,7 +29,7 @@ def test_valid_expression_with_special_characters():
     assert expression_check("3.14159 * 2^(-2) % 7") == (True, )
 
 def test_valid_expression_with_double_minus():
-    assert expression_check("5 * --3") == (False, "There are unsupported combinationss of symbols in request!")
+    assert expression_check("5 * --3") == (False, "There are unsupported combinations of symbols in request!")
 
 def test_valid_expression_with_double_plus():
     assert expression_check("4 +++ 2") == (False, "There are unsupported combinations of symbols in request!")
