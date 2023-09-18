@@ -1,3 +1,5 @@
+
+// По клику записываем результат истории в панель
 document.addEventListener("DOMContentLoaded", function() {
     const historyItems = document.querySelectorAll(".history-item");
 

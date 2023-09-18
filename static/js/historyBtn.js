@@ -13,6 +13,7 @@ if (panelState === 'opened') {
     panel.classList.add('opened');
 }
 
+// Запоминаем текущее вращение в кнопке, чтобы после перезапуска страницы оно не сбрасывалось
 historyBtn.addEventListener('click', () => {
     const currentRotation = getRotationValue(image);
     const newRotation = currentRotation + 180;
@@ -22,6 +23,7 @@ historyBtn.addEventListener('click', () => {
     localStorage.setItem('imageRotation', newRotation);
 })
 
+// Открытие/закрытие панели истории с запоминанием состояния
 historyBtn.addEventListener('click', () => {
     panel.classList.toggle('opened');
 
@@ -32,7 +34,7 @@ historyBtn.addEventListener('click', () => {
     }
 });
 
-// 
+// chatgpt)
 function getRotationValue(element) {
     const style = window.getComputedStyle(element);
     const matrix = style.getPropertyValue('transform');

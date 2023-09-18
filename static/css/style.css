@@ -78,8 +78,11 @@ form .display input, button {
 }
 
 form input.equal.operator, button.equal.operator {
-    /* width: 145px; */
     background-color: #FEC13B;
+}
+
+form button.equal.operator.history {
+    position: absolute;
 }
 
 form input.operator, button.operator {
