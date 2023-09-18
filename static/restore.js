@@ -5,8 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     historyItems.forEach(function (item) {
         item.addEventListener("click", function () {
             const result = item.getAttribute("data-result");
-            document.getElementsByName("display").value = result;
-            alert(document.getElementsByName("display").value);
+            document.getElementsByName("display")[0].value = result;
 
             // fetch('/calculate', {
             //     method: 'POST',

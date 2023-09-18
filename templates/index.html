@@ -9,6 +9,11 @@
 </head>
 <body>
 
+<div>
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+</div>
 <div class="container">
     <div class="calculator">
         <form action="{{ url_for('calculate') }}" method="post">
@@ -47,7 +52,6 @@
             <div>
                 <input type="button" value="%" onclick="display.value += '%' ">
                 <input type="button" value="0" onclick="display.value += '0' ">
-<!--                <input type="button" value="=" onclick="display.value = eval(display.value)" class="equal operator">-->
                 <input type="button" value="." onclick="display.value += '.' ">
 
                 <input type="submit" value="=" class="equal operator">
@@ -58,12 +62,12 @@
         <div class="content">
             <ul>
                 {% for item in history %}
-                <div class="history-item" data-result="{{ item.result }}">
-                    <li>{{ item.expression }} = {{ item.result }}</li>
+                <div class="history-item" data-result="{{ item[1] }}">
+                    <li>{{ item[0] }} = {{ item[1] }}</li>
                 </div>
                 {% endfor %}
             </ul>
-            <form action="{{ url_for('history_moment') }}" method="post">
+            <form action="{{ url_for('history_clear') }}" method="post">
                 <div>
                     <button type="submit" value="CH" class="equal operator">
                         <img src="{{ url_for('static', filename='images/trash.png') }}" alt="trash" />
