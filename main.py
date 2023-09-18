@@ -32,7 +32,7 @@ def calculate():
         flash(is_valid[1])
     else:
         try:
-            result = eval(expression.replace("^", "**"))
+            result = eval(expression.replace("^", "**").replace("%", "*0.01*"))
             history.add_history(History(expression, result, str(datetime.datetime.now())))
         except ZeroDivisionError:
             flash("Division by zero found!")
