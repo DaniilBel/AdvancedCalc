@@ -10,7 +10,6 @@ app = Flask(__name__)
 app.secret_key = "KADadbjhaOW&^*FTYG*WGXjskBSJLHBasnk"
 app.debug = True
 
-
 def expression_check(expression) -> (bool, str):
     if re.fullmatch(r"\A[\t ()0-9+*/^%.-]*\Z", expression) is None:
         return False, "There are unsupported symbols in request!"

@@ -12,7 +12,8 @@ def create_connection():
             host='127.0.0.1',
             port=3306,
             user='root',
-            passwd='processionLF0112358.',
+            # passwd='processionLF0112358.',
+            passwd='1234',
             database='advanced_calc',
         )
         connection.autocommit = True
