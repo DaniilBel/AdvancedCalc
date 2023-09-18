@@ -10,19 +10,11 @@ app = Flask(__name__)
 app.secret_key = "KADadbjhaOW&^*FTYG*WGXjskBSJLHBasnk"
 
 
-def expression_check(expression, testIgnore = True) -> (bool, str):
+def expression_check(expression) -> (bool, str):
     if re.fullmatch(r"\A[\s()0-9+*/^%.-]*\Z", expression) is None:
         return False, "There are unsupported symbols in request!"
     if len(re.findall(r"[+*/^%-]\s*-\s*-|\+\s*\+\s*\+|/\s*/|\*\s*\*|\.\s*\.", expression)) != 0:
         return False, "There are unsupported combinations of symbols in request!"
-    if not testIgnore:
-        return True,
-    if re.fullmatch(r"\A\s*\Z", expression) is not None:
-        return True,
-    try:
-        eval(expression.replace("^", "**"))
-    except SyntaxError:
-        return False, "There is syntax error in request!"
     return True,
 
 
@@ -35,7 +27,7 @@ def index():
 def calculate():
     expression = request.form['display']
     result = ""
-    is_valid = expression_check(expression, False)
+    is_valid = expression_check(expression)
     if not is_valid[0]:
         flash(is_valid[1])
     else:
@@ -44,8 +36,8 @@ def calculate():
             history.add_history(History(expression, result, str(datetime.datetime.now())))
         except ZeroDivisionError:
             flash("Division by zero found!")
-        except SyntaxError:
-            flash("There is syntax error in request!")
+        except (SyntaxError, ValueError):
+            flash("Invalid expression!")
 
     return render_template('index.html', history=history.get_history(), result=result)
 

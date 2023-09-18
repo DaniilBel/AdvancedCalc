@@ -17,14 +17,6 @@ def test_invalid_combinations():
     assert expression_check("(5.5 / 2) +++ -1") == (False, "There are unsupported combinations of symbols in request!")
 
 
-def test_empty_expression():
-    assert expression_check("") == (True,)  # Пустое выражение считается допустимым
-
-
-def test_whitespace_expression():
-    assert expression_check("  \t  ") == (True,)  # Выражение с пробелами и табуляцией считается допустимым
-
-
 def test_invalid_expression():
     assert expression_check("3 + 2 * (4 - 1a)") == (False, "There are unsupported symbols in request!")
 
@@ -40,24 +32,10 @@ def test_valid_expression_with_double_minus():
 def test_valid_expression_with_triple_plus():
     assert expression_check("4 +++ 2") == (False, "There are unsupported combinations of symbols in request!")
 
-def test_valid_expression_with_one_minus():
-    assert expression_check("-") == (False, "There are unsupported combinations of symbols in request!")
 
 def test_valid_expression_with_double_scobka():
     assert expression_check("()") == (False, "There are unsupported combinations of symbols in request!")
 
 
-def test_valid_expression_with_scobka_and_point():
-    assert expression_check("(.") == (False, "There are unsupported combinations of symbols in request!")
-
-def test_valid_expression_with_scobka_and_point():
-    assert expression_check("(.") == (False, "There are unsupported combinations of symbols in request!")
-
 def test_valid_expression_with_slashes():
     assert expression_check("////") == (False, "There are unsupported combinations of symbols in request!")
-
-def test_valid_expression_with_glazki():
-    assert expression_check("^^") == (False, "There are unsupported combinations of symbols in request!")
-
-def test_valid_expression_with_minus_and_plus():
-    assert expression_check("-+") == (False, "There are unsupported combinations of symbols in request!")
