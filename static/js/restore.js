@@ -4,8 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     historyItems.forEach(function (item) {
         item.addEventListener("click", function () {
-            const result = item.getAttribute("data-result");
-            document.getElementsByName("display")[0].value = result;
+            document.getElementsByName("display")[0].value = item.getAttribute("data-result");
         });
     });
 });

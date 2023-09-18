@@ -54,13 +54,13 @@
         </form>
 
         {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div id="error">
-                    {% for message in get_flashed_messages() %}
-                        {{ message }}
-                    {% endfor %}
-                </div>
-            {% endif %}
+        {% if messages %}
+        <div id="error">
+            {% for message in get_flashed_messages() %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
         {% endwith %}
     </div>
     <div id="history">
