@@ -112,7 +112,7 @@ class HistoryRepository:
         try:
             cursor.execute(query)
             cursor.close()
-            return "Init succesfull."
+            return "Init successful."
 
         except Error as err:
             return None
