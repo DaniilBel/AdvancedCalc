@@ -6,14 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/error_style.css') }}">
 </head>
 <body>
-
-<div>
-    {% for message in get_flashed_messages() %}
-        {{ message }}
-    {% endfor %}
-</div>
 <div class="container">
     <div class="calculator">
         <form action="{{ url_for('calculate') }}" method="post">
@@ -53,10 +48,14 @@
                 <input type="button" value="%" onclick="display.value += '%' ">
                 <input type="button" value="0" onclick="display.value += '0' ">
                 <input type="button" value="." onclick="display.value += '.' ">
-
                 <input type="submit" value="=" class="equal operator">
             </div>
         </form>
+        <div id="error">
+            {% for message in get_flashed_messages() %}
+                {{ message }}
+            {% endfor %}
+        </div>
     </div>
     <div id="history">
         <div class="content">
@@ -80,5 +79,6 @@
 
 <script src="{{ url_for('static', filename='restore.js') }}"></script>
 <script src="{{ url_for('static', filename='historyBtn.js') }}"></script>
+<script src="{{ url_for('static', filename='error.js') }}"></script>
 </body>
 </html>

@@ -6,15 +6,6 @@ document.addEventListener("DOMContentLoaded", function() {
         item.addEventListener("click", function () {
             const result = item.getAttribute("data-result");
             document.getElementsByName("display")[0].value = result;
-
-            // fetch('/calculate', {
-            //     method: 'POST',
-            // }).then(data => {
-            //     window.location.reload();
-            // })
-            // .catch(error => {
-            //     console.log(error);
-            // });
         });
     });
 });
