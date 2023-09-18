@@ -10,11 +10,15 @@ app = Flask(__name__)
 app.secret_key = "KADadbjhaOW&^*FTYG*WGXjskBSJLHBasnk"
 
 
-def expression_check(expression) -> (bool, str):
+def expression_check(expression, testIgnore = True) -> (bool, str):
     if re.fullmatch(r"\A[\s()0-9+*/^%.-]*\Z", expression) is None:
         return False, "There are unsupported symbols in request!"
     if len(re.findall(r"[+*/^%-]\s*-\s*-|\+\s*\+\s*\+|/\s*/|\*\s*\*|\.\s*\.", expression)) != 0:
         return False, "There are unsupported combinations of symbols in request!"
+    if not testIgnore:
+        return True,
+    if re.fullmatch(r"\A\s*\Z", expression) is not None:
+        return True,
     try:
         eval(expression.replace("^", "**"))
     except SyntaxError:
@@ -29,17 +33,19 @@ def index():
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
-    expression = request.form['display'].replace("^", "**")
+    expression = request.form['display']
     result = ""
-    is_valid = expression_check(expression)
+    is_valid = expression_check(expression, False)
     if not is_valid[0]:
         flash(is_valid[1])
     else:
         try:
-            result = eval(expression)
+            result = eval(expression.replace("^", "**"))
             history.add_history(History(expression, result, str(datetime.datetime.now())))
         except ZeroDivisionError:
             flash("Division by zero found!")
+        except SyntaxError:
+            flash("There is syntax error in request!")
 
     return render_template('index.html', history=history.get_history(), result=result)
 
