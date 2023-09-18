@@ -15,10 +15,10 @@ services:
       - ./database/sql:/docker-entrypoint-initdb.d
 
   app:
-      container_name: calculate
-      depends_on:
-          - db
-      restart: on-failure:1000
-      build: .
-      ports:
-          - "5000:5000"
+    container_name: calculate
+    depends_on:
+      - db
+    restart: on-failure:1000
+    build: .
+    ports:
+      - "5000:5000"
