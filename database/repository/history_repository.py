@@ -92,7 +92,7 @@ class HistoryRepository:
 
         except Error as err:
             return None
-        
+
     def init(self) -> Optional[str]:
 
         cursor = self.connection.cursor()
@@ -113,7 +113,6 @@ class HistoryRepository:
             cursor.execute(query)
             cursor.close()
             return "Init succesfull."
-        
+
         except Error as err:
             return None
-        
