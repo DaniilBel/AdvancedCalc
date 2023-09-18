@@ -27,7 +27,7 @@ def index():
 def calculate():
     expression = request.form['display']
     result = ""
-    is_valid = expression_check(expression, False)
+    is_valid = expression_check(expression)
     if not is_valid[0]:
         flash(is_valid[1])
     else:
