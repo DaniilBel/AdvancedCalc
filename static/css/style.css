@@ -82,7 +82,9 @@ form input.equal.operator, button.equal.operator {
 }
 
 form button.equal.operator.history {
-    position: absolute;
+    position: relative;
+    top: 7px; 
+    /* left: 1px; */
 }
 
 form input.operator, button.operator {
