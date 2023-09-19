@@ -32,8 +32,10 @@ def test_valid_expression_with_double_minus():
 def test_valid_expression_with_triple_plus():
     assert expression_check("4 +++ 2") == (False, "There are unsupported combinations of symbols in request!")
 
+
 def test_valid_expression_with_double_braces():
     assert expression_check("()()") == (False, "There are unsupported combinations of symbols in request!")
+
 
 def test_valid_expression_with_inverted_double_braces():
     assert expression_check(")(") == (False, "There are unsupported combinations of symbols in request!")
