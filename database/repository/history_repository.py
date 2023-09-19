@@ -2,7 +2,7 @@ from typing import Optional
 
 from mysql.connector import Error
 
-from database.model.calc_history import History, HistoryGet
+from database.model.calc_history import History
 from database.model.connector import create_connection
 
 
@@ -24,7 +24,6 @@ class HistoryRepository:
         INSERT INTO calc_history (line, answer, is_ans_int, date) 
         VALUES (%s, %s, %s, %s)
         """
-
         try:
             cursor.execute(query, [history.line,
                                    history.answer,
@@ -51,27 +50,6 @@ class HistoryRepository:
         except Error as err:
             return None
 
-    def get_answer(self, line: str) -> Optional[HistoryGet]:
-        """
-        This method returns the historical calculation response.
-        """
-
-        cursor = self.connection.cursor()
-        query = f"""
-        SELECT * FROM calc_history
-        WHERE line='{line}'
-        LIMIT 1
-        """
-
-        try:
-            cursor.execute(query)
-            line, answer, is_ans_int, date = cursor.fetchall()[0]
-            cursor.close()
-            return HistoryGet(line, int(answer) if is_ans_int else answer, is_ans_int, date)
-
-        except Error as err:
-            return None
-
     def get_history(self) -> Optional[list]:
         """
         This method returns the calculation history.
@@ -86,10 +64,8 @@ class HistoryRepository:
 
             for row in cursor.fetchall():
                 line, answer, is_ans_int, date = row
-                history.append([line, (int(answer) if is_ans_int else answer), is_ans_int, date])
-
+                history.append([line, (int(answer) if is_ans_int and answer < 1e+12 else answer), is_ans_int, date])
             cursor.close()
-            print(history)
             return history
 
         except Error as err:

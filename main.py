@@ -20,7 +20,6 @@ def expression_check(expression) -> (bool, str):
 
 @app.route('/')
 def index():
-    print(history.get_history())
     return render_template('index.html', history=history.get_history())
 
 
@@ -34,8 +33,6 @@ def calculate():
     else:
         try:
             result = eval(expression.replace("^", "**").replace("%", "*0.01*"))
-            result = float(result) if result >= 1e+12    else result
-
             history.add_history(History(expression, result, type(result) == int, str(datetime.datetime.now())))
         except ZeroDivisionError:
             flash("Division by zero found!")
