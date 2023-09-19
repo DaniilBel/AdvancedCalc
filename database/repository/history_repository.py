@@ -21,13 +21,14 @@ class HistoryRepository:
 
         cursor = self.connection.cursor()
         query = """
-        INSERT INTO calc_history (line, answer, date) 
-        VALUES (%s, %s, %s)
+        INSERT INTO calc_history (line, answer, is_ans_int, date) 
+        VALUES (%s, %s, %s, %s)
         """
 
         try:
             cursor.execute(query, [history.line,
                                    history.answer,
+                                   history.is_ans_int,
                                    history.date])
             cursor.close()
             return "History line add successfully."
@@ -64,9 +65,9 @@ class HistoryRepository:
 
         try:
             cursor.execute(query)
-            line, answer, date = cursor.fetchall()[0]
+            line, answer, is_ans_int, date = cursor.fetchall()[0]
             cursor.close()
-            return HistoryGet(line, answer, date)
+            return HistoryGet(line, int(answer) if is_ans_int else answer, is_ans_int, date)
 
         except Error as err:
             return None
@@ -84,10 +85,11 @@ class HistoryRepository:
             cursor.execute(query)
 
             for row in cursor.fetchall():
-                line, answer, date = row
-                history.append([line, answer, date])
+                line, answer, is_ans_int, date = row
+                history.append([line, (int(answer) if is_ans_int else answer), is_ans_int, date])
 
             cursor.close()
+            print(history)
             return history
 
         except Error as err:

@@ -11,7 +11,7 @@ app.secret_key = "KADadbjhaOW&^*FTYG*WGXjskBSJLHBasnk"
 
 
 def expression_check(expression) -> (bool, str):
-    if re.fullmatch(r"\A[\s()0-9+*/^%.-]*\Z", expression) is None:
+    if re.fullmatch(r"\A[\se()0-9+*/^%.-]*\Z", expression) is None:
         return False, "There are unsupported symbols in request!"
     if len(re.findall(r"[+*/^%-]\s*-\s*-|\+\s*\+\s*\+|/\s*/|\*\s*\*|\.\s*\.|\(\)|\)\(|\d\(", expression)) != 0:
         return False, "There are unsupported combinations of symbols in request!"
@@ -20,6 +20,7 @@ def expression_check(expression) -> (bool, str):
 
 @app.route('/')
 def index():
+    print(history.get_history())
     return render_template('index.html', history=history.get_history())
 
 
@@ -33,10 +34,12 @@ def calculate():
     else:
         try:
             result = eval(expression.replace("^", "**").replace("%", "*0.01*"))
-            history.add_history(History(expression, result, str(datetime.datetime.now())))
+            result = float(result) if result >= 1e+12    else result
+
+            history.add_history(History(expression, result, type(result) == int, str(datetime.datetime.now())))
         except ZeroDivisionError:
             flash("Division by zero found!")
-        except (SyntaxError, ValueError):
+        except (SyntaxError, ValueError, NameError):
             flash("Invalid expression!")
 
     return render_template('index.html', history=history.get_history(), result=result)
@@ -50,4 +53,4 @@ def history_clear():
 
 if __name__ == '__main__':
     history = HistoryRepository()
-    app.run(host="0.0.0.0", debug=False)
+    app.run(host="0.0.0.0", debug=True)

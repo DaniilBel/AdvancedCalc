@@ -13,7 +13,7 @@
     <div class="calculator">
         <form action="{{ url_for('calculate') }}" method="post">
             <div class="display">
-                <input type="text" name="display" value="{{result}}" placeholder="0" required>
+                <input type="text" name="display" value="{{ result }}" placeholder="0" required>
             </div>
             <div>
                 <input type="button" value="AC" onclick="display.value = '' " class="operator">
@@ -54,22 +54,22 @@
         </form>
 
         {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <div id="error">
-            {% for message in get_flashed_messages() %}
-            {{ message }}
-            {% endfor %}
-        </div>
-        {% endif %}
+            {% if messages %}
+                <div id="error">
+                    {% for message in get_flashed_messages() %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
         {% endwith %}
     </div>
     <div id="history">
         <div class="content">
             <ul>
                 {% for item in history %}
-                <div class="history-item" data-result="{{ item[1] }}">
-                    <li>{{ item[0] }} = {{ item[1] }}</li>
-                </div>
+                    <div class="history-item" data-result="{{ item[1] }}">
+                        <li>{{ item[0] }} = {{ item[1] }}</li>
+                    </div>
                 {% endfor %}
             </ul>
             <form action="{{ url_for('history_clear') }}" method="post">

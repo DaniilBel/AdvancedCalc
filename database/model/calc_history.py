@@ -5,6 +5,7 @@ from dataclasses import dataclass
 class History:
     line: str
     answer: float
+    is_ans_int: bool
     date: str
 
 
@@ -12,4 +13,5 @@ class History:
 class HistoryGet:
     line: str
     answer: float
+    is_ans_int: bool
     date: str
