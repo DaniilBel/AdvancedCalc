@@ -78,8 +78,13 @@ form .display input, button {
 }
 
 form input.equal.operator, button.equal.operator {
-    /* width: 145px; */
     background-color: #FEC13B;
+}
+
+form button.equal.operator.history {
+    position: relative;
+    top: 7px; 
+    /* left: 1px; */
 }
 
 form input.operator, button.operator {
@@ -107,6 +112,25 @@ form input.operator, button.operator {
     overflow-y: auto;
     max-height: 100%;
     padding: 10px;
+}
+
+#history .history-item {
+    overflow-x: auto;
+}
+
+#history .history-item::-webkit-scrollbar {
+    width: 5px;
+    height: 7px;
+    margin-bottom: 10px;
+}
+
+#history .history-item::-webkit-scrollbar-thumb {
+    background-color: #868686;
+    border-radius: 8px;
+}
+
+#history .history-item::-webkit-scrollbar-track {
+    background-color: #EFEFEF;
 }
 
 #history.opened {

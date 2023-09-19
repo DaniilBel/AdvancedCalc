@@ -6,23 +6,19 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/error_style.css') }}">
 </head>
 <body>
-
-<div>
-    {% for message in get_flashed_messages() %}
-        {{ message }}
-    {% endfor %}
-</div>
 <div class="container">
     <div class="calculator">
         <form action="{{ url_for('calculate') }}" method="post">
             <div class="display">
-                <input type="text" name="display" value="{{result}}" placeholder="0" required>
+                <input type="text" name="display" value="{{ result }}" placeholder="0" required>
             </div>
             <div>
                 <input type="button" value="AC" onclick="display.value = '' " class="operator">
-                <input type="button" value="Del" onclick="display.value = display.value.toString().slice(0, -1) " class="operator">
+                <input type="button" value="Del" onclick="display.value = display.value.toString().slice(0, -1) "
+                       class="operator">
                 <input type="button" value="^" onclick="display.value += '^' " class="operator">
                 <input type="button" value="/" onclick="display.value += '/' " class="operator">
                 <input type="button" value="(" onclick="display.value += '(' " class="operator">
@@ -39,8 +35,8 @@
                 <input type="button" value="5" onclick="display.value += '5' ">
                 <input type="button" value="6" onclick="display.value += '6' ">
                 <input type="button" value="+" onclick="display.value += '+' " class="operator">
-                <button type="button" value=">" id="open-history" class="equal operator">
-                    <img src="{{ url_for('static', filename='images/right-arrow.png') }}" alt="open history" />
+                <button type="button" value=">" id="open-history" class="equal operator history">
+                    <img src="{{ url_for('static', filename='images/right-arrow.png') }}" alt="open history"/>
                 </button>
             </div>
             <div>
@@ -53,24 +49,33 @@
                 <input type="button" value="%" onclick="display.value += '%' ">
                 <input type="button" value="0" onclick="display.value += '0' ">
                 <input type="button" value="." onclick="display.value += '.' ">
-
                 <input type="submit" value="=" class="equal operator">
             </div>
         </form>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div id="error">
+                    {% for message in get_flashed_messages() %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
     </div>
     <div id="history">
         <div class="content">
             <ul>
                 {% for item in history %}
-                <div class="history-item" data-result="{{ item[1] }}">
-                    <li>{{ item[0] }} = {{ item[1] }}</li>
-                </div>
+                    <div class="history-item" data-result="{{ item[1] }}">
+                        <li>{{ item[0] }} = {{ item[1] }}</li>
+                    </div>
                 {% endfor %}
             </ul>
             <form action="{{ url_for('history_clear') }}" method="post">
                 <div>
                     <button type="submit" value="CH" class="equal operator">
-                        <img src="{{ url_for('static', filename='images/trash.png') }}" alt="trash" />
+                        <img src="{{ url_for('static', filename='images/trash.png') }}" alt="trash"/>
                     </button>
                 </div>
             </form>
@@ -78,7 +83,8 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='restore.js') }}"></script>
-<script src="{{ url_for('static', filename='historyBtn.js') }}"></script>
+<script src="{{ url_for('static', filename='js/restore.js') }}"></script>
+<script src="{{ url_for('static', filename='js/historyBtn.js') }}"></script>
+<script src="{{ url_for('static', filename='js/error.js') }}"></script>
 </body>
 </html>
